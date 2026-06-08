@@ -12,7 +12,7 @@ def convert_currency(amount: float, from_currency: str, to_currency: str) -> str
     data = response.json() #api returns data in JSON format
     rate = data["rates"][to_currency]
     result = amount * rate
-    return f"{amount} {from_currency}" = {result:.2f} {to_currency}
+    return f"{amount} {from_currency} = {result:.2f} {to_currency}"
 
 @mcp.tool()
 def get_ip_info(ip_address: str) -> str:
