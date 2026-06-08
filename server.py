@@ -25,7 +25,7 @@ def get_ip_info(ip_address: str) -> str:
     response = requests.get(url)
     data = response.json()
     city = data["city"]
-    country = data["county_name"]
+    country = data["country_name"]
     org = data["org"]
     return f"IP: {ip_address} | Location: {city}, {country} | Network: {org}"
     
