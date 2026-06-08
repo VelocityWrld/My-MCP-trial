@@ -1,5 +1,7 @@
 # the actual server logic + tools
 from mcp.server.fastmcp import FastMCP
+from starlette.applications import Starlette
+from Starlette.routing import Mount
 import requests
 import os
 import uvicorn
@@ -29,5 +31,7 @@ def get_ip_info(ip_address: str) -> str:
     
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    app = mcp.sse_app()
+    app = Starlette(routes=[
+       Mount("/", app=mcp.sse_app()),
+])
     uvicorn.run(app, host="0.0.0.0", port=port)
