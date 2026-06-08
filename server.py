@@ -1,6 +1,6 @@
 from mcp.server.fastmcp import FastMCP
 from mcp.server.sse import SseServerTransport
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from starlette.routing import Mount
 import requests
 import os
@@ -34,7 +34,7 @@ sse = SseServerTransport("/messages/")
 app.router.routes.append(Mount("/messages", app=sse.handle_post_message))
 
 @app.get("/sse")
-async def handle_sse(request):
+async def handle_sse(request: Request):
     async with sse.connect_sse(request.scope, request.receive, request._send) as (read, write):
         await mcp._mcp_server.run(read, write, mcp._mcp_server.create_initialization_options())
 
