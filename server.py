@@ -1,6 +1,7 @@
 # the actual server logic + tools
 from mcp.server.fastmcp import FastMCP
 import requests
+import os
 
 mcp = FastMCP("vic-mcp-server") #creating the server instance
 
