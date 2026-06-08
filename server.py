@@ -2,6 +2,8 @@
 from mcp.server.fastmcp import FastMCP
 from starlette.applications import Starlette
 from starlette.routing import Mount
+from starlette.middleware import Middleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 import requests
 import os
 import uvicorn
@@ -30,8 +32,13 @@ def get_ip_info(ip_address: str) -> str:
     return f"IP: {ip_address} | Location: {city}, {country} | Network: {org}"
     
 if __name__ == "__main__":
+    from starlette.middleware import Middleware
+    from starlette.middleware.trustedhost import TrustedHostMiddleware
     port = int(os.environ.get("PORT", 8000))
-    app = Starlette(routes=[
-        Mount("/", app=mcp.sse_app()),
-    ])
+    app = Starlette(
+        routes=[Mount("/", app=mcp.sse_app())],
+        middleware=[
+            Middleware(TrustedHostMiddleware, allowed_hosts=["*"])
+        ]
+    )
     uvicorn.run(app, host="0.0.0.0", port=port)
