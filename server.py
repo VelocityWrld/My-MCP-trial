@@ -2,6 +2,7 @@
 from mcp.server.fastmcp import FastMCP
 import requests
 import os
+import uvicorn
 
 mcp = FastMCP("vic-mcp-server") #creating the server instance
 
