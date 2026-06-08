@@ -3,3 +3,4 @@ mcp[cli] #the MCP library;gives us FastMCP and all that makes my server speak th
 requests #lets my .py code make HTTP calls to external APIs
 uvicorn #web server running my python code
 fastapi
+starlette
