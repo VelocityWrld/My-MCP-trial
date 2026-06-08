@@ -2,6 +2,8 @@
 from mcp.server.fastmcp import FastMCP
 import requests
 import os
+import mcp
+print(mcp.__version__)
 
 mcp = FastMCP("vic-mcp-server") #creating the server instance
 
