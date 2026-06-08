@@ -2,7 +2,6 @@
 from mcp.server.fastmcp import FastMCP
 import requests
 import os
-import uvicorn
 
 mcp = FastMCP("vic-mcp-server") #creating the server instance
 
@@ -28,5 +27,4 @@ def get_ip_info(ip_address: str) -> str:
     return f"IP: {ip_address} | Location: {city}, {country} | Network: {org}"
     
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run(mcp.get_asgi_app(), host="0.0.0.0", port=port)
+    mcp.run(transport="sse")
