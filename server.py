@@ -1,7 +1,7 @@
 # the actual server logic + tools
 from mcp.server.fastmcp import FastMCP
 from starlette.applications import Starlette
-from Starlette.routing import Mount
+from starlette.routing import Mount
 import requests
 import os
 import uvicorn
