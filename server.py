@@ -26,4 +26,4 @@ def get_ip_info(ip_address: str) -> str:
     return f"IP: {ip_address} | Location: {city}, {country} | Network: {org}"
     
 if __name__ == "__main__":
-    mcp.run(transport="sse", host="0.0.0.0", port=8000)
+    mcp.run(transport="sse")
