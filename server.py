@@ -40,7 +40,7 @@ def convert_currency(amount: float, from_currency: str, to_currency: str) -> str
 def get_ip_info(ip_address: str) -> str:
     """Get location and network information about an IP address"""
     try:
-        url = f"https://ipapi.co/{ip_address}/json/"
+        url = f"http://ip-api.com/json/{ip_address}"
         response = requests.get(url, timeout=10)
         
         if response.status_code != 200:
@@ -48,11 +48,11 @@ def get_ip_info(ip_address: str) -> str:
         
         data = response.json()
         
-        if "error" in data:
-            return f"Error: {data.get('reason', 'Invalid IP address.')}"
+        if data.get("status") == "fail":
+            return f"Error: {data.get('message', 'Invalid IP address.')}"
         
         city = data.get("city", "Unknown")
-        country = data.get("country_name", "Unknown")
+        country = data.get("country", "Unknown")
         org = data.get("org", "Unknown")
         
         return f"IP: {ip_address} | Location: {city}, {country} | Network: {org}"
