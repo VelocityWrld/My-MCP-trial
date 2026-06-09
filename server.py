@@ -21,13 +21,32 @@ def convert_currency(amount: float, from_currency: str, to_currency: str) -> str
 @mcp.tool()
 def get_ip_info(ip_address: str) -> str:
     """Get location and network information about an IP address"""
-    url = f"https://ipapi.co/{ip_address}/json/"
-    response = requests.get(url)
-    data = response.json()
-    city = data["city"]
-    country = data["country_name"]
-    org = data["org"]
-    return f"IP: {ip_address} | Location: {city}, {country} | Network: {org}"
+    try:
+        url = f"https://ipapi.co/{ip_address}/json/"
+        response = requests.get(url, timeout=10)
+        
+        if response.status_code != 200:
+            return f"Error: Could not fetch info for IP {ip_address}. API unavailable."
+        
+        data = response.json()
+        
+        if "error" in data:
+            return f"Error: {data.get('reason', 'Invalid IP address.')}"
+        
+        city = data.get("city", "Unknown")
+        country = data.get("country_name", "Unknown")
+        org = data.get("org", "Unknown")
+        
+        return f"IP: {ip_address} | Location: {city}, {country} | Network: {org}"
+    
+    except requests.exceptions.Timeout:
+        return "Error: Request timed out. Please try again."
+    
+    except requests.exceptions.ConnectionError:
+        return "Error: Could not connect to IP lookup API. Check your internet connection."
+    
+    except Exception as e:
+        return f"Error: Something went wrong — {str(e)}"
 
 app = FastAPI()
 sse = SseServerTransport("/messages/")
